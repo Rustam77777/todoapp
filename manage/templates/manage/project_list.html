@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+/* --- Project Box Links --- */
+.project-container {
+  display: flex;
+  flex-direction: column;  
+  gap: 1rem;
+}
+
+.project-box {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+  max-width: 600px;        /* e.g. cap the width if you like */
+  margin: 0 auto;          /* center on wider screens */
+}
+
+.project-box a {
+  display: block;
+  padding: 1.25rem;
+  color: #333;
+  text-decoration: none;            /* remove underline */
+  background-color: #fff;
+}
+
+.project-box a h3 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-size: 1.25rem;
+}
+
+.project-box a p {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  color: #555;
+}
+
+.project-box a .dates {
+  font-size: 0.875rem;
+  color: #777;
+}
+
+/* hover / focus states */
+.project-box:hover,
+.project-box:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.project-box a:hover h3,
+.project-box a:focus h3 {
+  color: #0056b3;
+}
+
+/* --- “Create Project” Button --- */
+/* Make .project-container centered with a max-width */
+.project-container {
+  max-width: 600px;      /* same as what you choose below */
+  margin: 0 auto;        /* centers horizontally */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Header shares the same container rules */
+.projects-header {
+  max-width: 600px;      /* match .project-container */
+  margin: 0 auto 1.5rem; /* center + space beneath */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* title left, button right */
+  align-items: left;
+  overflow: hidden;
+}
+
+.projects-header h2 {
+  margin: 20px 0px;
+  font-size: 2rem;
+  color: #333;
+}
+.btn-list{
+  max-width: 92px;
+}
+
+
+
+
+</style>
+
+  <div class="projects-header">
+   
+    <h2>Projects</h2>
+    {% if user.is_staff %}
+      <a class="btn btn-list" href="{% url 'project_create' %}">Create Project</a>
+    {% endif %}
+  </div>
+
+  <div class="project-container">
+    {% for project in projects %}
+      <div class="project-box">
+        <a href="{% url 'project_detail' project.id %}">
+          <h3>{{ project.title }}</h3>
+          <p>{{ project.description }}</p>
+          <div class="dates" style="text-align: right;">
+            {{ project.start_date }} — {{ project.end_date }}
+          </div>
+        </a>
+      </div>
+    {% empty %}
+      <p>No projects available.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

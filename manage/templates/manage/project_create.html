@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+    <style>
+        form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.containerr{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* title left, button right */
+  align-items: left;
+  overflow: hidden;
+  margin: 0 auto ;
+  max-width: 600px;
+}
+
+/* --- Form Fields --- */
+form p {
+  margin-bottom: 1.25rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+form input[type="text"],
+form input[type="date"],
+form textarea {
+  width: 100%;
+  max-width: 570px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+form input[type="text"]:focus,
+form input[type="date"]:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+/* --- Save Button (uses .btn) --- */
+form .btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;           /* remove default border */
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+form .btn:hover,
+form .btn:focus {
+  background-color: #218838;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+hr{
+  color: #555;
+  
+  width: 100vw;
+  height: 0.01px;
+  margin-top: 30px;
+}
+    </style>
+    <div class="containerr">
+      <hr>
+      {% if project %}
+  <h2>Edit Project</h2>
+{% else %}
+  <h2>New project</h2>
+{% endif %}
+    </div>
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" style="border: none;" type="submit">Save</button>
+  </form>
+{% endblock %}

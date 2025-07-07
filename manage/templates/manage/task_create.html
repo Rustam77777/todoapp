@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* --- Reuse form styles from New Project --- */
+form {
+  max-width: 600px;
+  margin: 1.5rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+form p {
+  margin-bottom: 1.25rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+form input[type="text"],
+form input[type="date"],
+form textarea,
+form select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+/* --- Save Task Button --- */
+form button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+form button:hover,
+form button:focus {
+  background-color: #218838;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* --- Back Link --- */
+a.back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+a.back-link:hover,
+a.back-link:focus {
+  color: #0056cc;
+  text-decoration: underline;
+}
+
+</style>
+  {% if task %}
+  <h2>Edit Task for “{{ project.title }}”</h2>
+{% else %}
+  <h2>Create Task for “{{ project.title }}”</h2>
+{% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Task</button>
+  </form>
+  <p><a class="back-link" href="{% url 'project_detail' project.id %}">← Back to Project</a></p>
+{% endblock %}

@@ -1,0 +1,125 @@
+
+{% load i18n %}
+{% load allauth %}
+<div class="social-menu">
+  <ul>
+    <li><a href="{% url 'login' %}">Sign In</a></li>
+    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+  </ul>
+</div>
+{% block content %}
+<style>
+        /* --- Container & Typography --- */
+/* --- Social Sign‑in Page Styling --- */
+
+/* Center the title & description */
+body > h1 {
+  text-align: center;
+  font-size: 1.75rem;
+  color: #333;
+  margin-top: 2rem;
+}
+body > p {
+  text-align: center;
+  color: #555;
+  margin: 1rem 0 2rem;
+}
+
+/* Style the form as a centered card */
+form {
+  max-width: 360px;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+/* Style the Continue button */
+form button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+form button[type="submit"]:hover,
+form button[type="submit"]:focus {
+  background-color: #0056cc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+/* --- Social Menu --- */
+.social-menu {
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-top: 30px;
+}
+
+.social-menu strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 1rem;
+}
+
+.social-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+
+
+.social-menu a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #f1f1f1;
+  color: #007bff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.social-menu a:hover,
+.social-menu a:focus {
+  background-color: #007bff;
+  color: #fff;
+}
+
+
+
+    </style>
+    {% if process == "connect" %}
+        {% element h1 %}
+            {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
+        {% endelement %}
+        {% element p %}
+            {% blocktrans with provider.name as provider %}out to connect a new third-party account from {{ provider }}.{% endblocktrans %}
+        {% endelement %}
+    {% else %}
+        {% element h1 %}
+            {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
+        {% endelement %}
+        {% element p %}
+            {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
+        {% endelement %}
+    {% endif %}
+    {% element form method="post" no_visible_fields=True %}
+        {% slot actions %}
+            {% csrf_token %}
+            {% element button type="submit" %}
+                {% trans "Continue" %}
+            {% endelement %}
+        {% endslot %}
+    {% endelement %}
+{% endblock content %}

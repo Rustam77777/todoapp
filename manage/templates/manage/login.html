@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+
+{% block content %}
+<style>
+    /* --- Form Container & Fields (reuse) --- */
+form {
+  max-width: 400px;
+  margin: 1.5rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+form p {
+  margin-bottom: 1.25rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+form input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+/* --- Primary Button --- */
+form button, .btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+form button:hover,
+form button:focus,
+.btn:hover,
+.btn:focus {
+  background-color: #0056cc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* --- Auxiliary Link (e.g. “Sign up here”) --- */
+a.aux-link {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-size: 0.95rem;
+  margin-left: 5px;
+}
+
+a.aux-link:hover,
+a.aux-link:focus {
+  color: #0056cc;
+  text-decoration: underline;
+}
+
+/* --- Social Login Button --- */
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem auto 0;
+  padding: 0.6rem;
+  background-color: #4285f4;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.social-btn:hover,
+.social-btn:focus {
+  background-color: #357ae8;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.social-btn img {
+  height: 1.2em;
+  margin-right: 0.5em;
+}
+h2, .plogin{
+  display: flex;
+  align-items: left;
+  overflow: hidden;
+  margin: 0 auto ;
+  max-width:400px;
+}
+
+</style>
+  <h2>Log In</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Log In</button>
+  </form>
+  <p class="plogin">New?  <a class="aux-link" href="{% url 'signup' %}">   Sign up here</a>.</p>
+
+
+
+  <a href="{% provider_login_url 'google' %}" class="social-btn">
+    Login with Google
+  </a>
+{% endblock %}
